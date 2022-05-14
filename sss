@@ -1,0 +1,39 @@
+Sp_helptext sp_Department
+
+create proc sp_Department  
+@Action varchar(20),  
+@Id int=0,  
+@Name varchar(50)=null,
+@Email varchar(50)=null,
+@Mobile varchar(20)=null,
+@address varchar(50)=null,
+@Gender varchar(10)=null,
+@IsActive bit=null,
+@Department int=null
+as  
+begin  
+if @Action='Insert'  
+   begin  
+   insert into Employee(Name,Email,Mobile,address,Gender,IsActive,Department) values
+   (@Name,@Email,@Mobile,@address,@Gender,@IsActive,@Department)  
+   end  
+else if @Action='Update'  
+   begin  
+   update Employee set Name=IsNull(@Name,Name),Email=IsNull(@Email,Email),Mobile=IsNull(@Mobile,Mobile),address=IsNull(@address,Address)
+   ,Gender=IsNull(@Gender,Gender),IsActive=IsNull(@IsActive,IsActive),Department=IsNull(@Department,Department) where Id=@Id  
+   end  
+else if @Action='Delete'  
+   begin  
+   update Employee set IsActive=@IsActive where Id=@Id  
+   end  
+else if @Action='Select'  
+   begin  
+   select * from Employee  
+   end  
+else if @Action='Select_one'  
+   begin  
+   select * from Employee where Id=@Id 
+   end  
+end
+
+select * from Employee inner join Department on Employee.Id=Department.Id
